@@ -1,43 +1,39 @@
 # https://github.com/amodsachintha/magic_squares_python3
+
+# Array dimensions
 N = 3
 
+# Directions
+HORIZONTAL = "HORIZONTAL"
+VERTICAL = "VERTICAL"
+DIAGONAL = "DIAGONAL"
 
-# sum horizontal axis
-def sum_horizontal(square):
-    h_sum = []
-    row_sum = 0
-    for x in range(N):
-        for y in range(N):
-            row_sum += square[x][y]
-        h_sum.append(row_sum)
-        row_sum = 0
-    return h_sum
+# use this array to bypass user input when testing
+SQUARE = [[4, 9, 2],
+          [3, 55, 7],
+          [8, 1, 6]]
 
 
-# sum vertical axis
-def sum_vertical(square):
-    v_sum = []
-    col_sum = 0
-    for x in range(N):
-        for y in range(N):
-            col_sum += square[y][x]
-        v_sum.append(col_sum)
-        col_sum = 0
-    return v_sum
-
-
-# sum diagonal axis
-def sum_diagonals(square):
-    d_sum = []
+# Horizontal, Vertical and Diagonal summing
+def universal_sum(square, direction):
     diagonal_1 = 0
     diagonal_2 = 0
+    row_sum = 0
+    u_sum = []
     for x in range(N):
-        diagonal_1 += square[x][x]
-        diagonal_2 += square[x][N - (x + 1)]
-
-    d_sum.append(diagonal_1)
-    d_sum.append(diagonal_2)
-    return d_sum
+        if direction == DIAGONAL:
+            diagonal_1 += square[x][x]
+            diagonal_2 += square[x][N - (x + 1)]
+        for y in range(N):
+            if direction == HORIZONTAL:
+                row_sum += square[x][y]
+            elif direction == VERTICAL:
+                row_sum += square[y][x]
+        u_sum.append(row_sum)
+        row_sum = 0
+    if direction == DIAGONAL:
+        return [diagonal_1, diagonal_2]
+    return u_sum
 
 
 # check if sums are equal in horizontal, vertical
@@ -59,9 +55,9 @@ def find_repeat(square):
 
 # lo shu checks
 def is_lo_shu(square):
-    if sum(sum_horizontal(square)) == 45:
-        if sum(sum_vertical(square)) == 45:
-            if sum(sum_diagonals(square)) == 30:
+    if sum(universal_sum(square, HORIZONTAL)) == 45:
+        if sum(universal_sum(square, VERTICAL)) == 45:
+            if sum(universal_sum(square, DIAGONAL)) == 30:
                 if find_repeat(square) == 1:
                     return 1
     return 0
@@ -82,7 +78,8 @@ def getuserinput():
 
 
 def check_square(square):
-    if check_equal(sum_horizontal(square)) and check_equal(sum_vertical(square)) and check_equal(sum_diagonals(square)):
+    if check_equal(universal_sum(square, HORIZONTAL)) and check_equal(universal_sum(square, VERTICAL)) and check_equal(
+            universal_sum(square, DIAGONAL)):
         is_magic = 1
     else:
         is_magic = 0
