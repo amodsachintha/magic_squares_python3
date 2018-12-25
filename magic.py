@@ -109,7 +109,7 @@ def main():
     while 1:
         square = getuserinput()
         check_square(square)
-        repeat = input('Do you wish to enter an new square? (y/n)')
+        repeat = input('Do you wish to enter a new square? (y/n)')
         if "n" in repeat:
             break
     print("Bye!")
