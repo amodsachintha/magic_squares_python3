@@ -10,7 +10,7 @@ DIAGONAL = "DIAGONAL"
 
 # use this array to bypass user input when testing
 SQUARE = [[4, 9, 2],
-          [3, 55, 7],
+          [3, 5, 7],
           [8, 1, 6]]
 
 
@@ -55,6 +55,11 @@ def find_repeat(square):
 
 # lo shu checks
 def is_lo_shu(square):
+    for row in square:
+        for element in row:
+                if element >= 10:
+                    return 0
+
     if sum(universal_sum(square, HORIZONTAL)) == 45:
         if sum(universal_sum(square, VERTICAL)) == 45:
             if sum(universal_sum(square, DIAGONAL)) == 30:
