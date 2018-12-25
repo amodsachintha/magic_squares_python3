@@ -1,3 +1,4 @@
+# https://github.com/amodsachintha/magic_squares_python3
 N = 3
 
 
